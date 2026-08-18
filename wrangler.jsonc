@@ -3,7 +3,10 @@
   // Die Seite hat keinen Build-Step: Der gesamte Repo-Inhalt wird direkt
   // ausgeliefert. Deploy-Befehl in Cloudflare: npx wrangler deploy
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "buehlervincent",
+  // Muss exakt dem Worker heissen, den Cloudflare beim Verbinden angelegt hat –
+  // sonst deployt wrangler an einem anderen Ziel vorbei. Der Name taucht nur in
+  // der workers.dev-Adresse auf; nach aussen zählt die Domain buehlervincent.ch.
+  "name": "mute-recipe-7b57",
   "compatibility_date": "2026-08-01",
   "assets": {
     "directory": "./",
