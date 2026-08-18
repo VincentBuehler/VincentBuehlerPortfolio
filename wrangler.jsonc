@@ -1,0 +1,12 @@
+{
+  // Konfiguration für Cloudflare Workers mit statischen Assets.
+  // Die Seite hat keinen Build-Step: Der gesamte Repo-Inhalt wird direkt
+  // ausgeliefert. Deploy-Befehl in Cloudflare: npx wrangler deploy
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "buehlervincent",
+  "compatibility_date": "2026-08-01",
+  "assets": {
+    "directory": "./",
+    "not_found_handling": "404-page"
+  }
+}
