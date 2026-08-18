@@ -1,0 +1,8 @@
+# Cloudflare liefert das Verzeichnis aus, das beim Build entsteht – und das
+# enthält auch das geklonte .git sowie die Projektdateien. Ohne diese Liste
+# waren .git/config und .git/HEAD öffentlich abrufbar.
+.git
+.gitignore
+.assetsignore
+wrangler.jsonc
+README.md
