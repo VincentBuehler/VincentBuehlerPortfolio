@@ -1,0 +1,450 @@
+/*
+  Vincent Bühler — Portfolio
+  Gestaltung: Schweizer Rastertypografie trifft Instrumententafel.
+  Sichtbares Raster, nummerierte Abschnitte, Messwerte in Monospace,
+  ein einziger Signalakzent. Bewusst kein Dark-Mode-Neon und kein Creme-Serif.
+*/
+
+:root {
+  --papier: #f2f3f4;
+  --flaeche: #ffffff;
+  --tinte: #14161a;
+  --tinte-weich: #5d636d;
+  --linie: #d3d7dc;
+  --linie-fein: rgba(20, 22, 26, 0.07);
+  --signal: #e4002b;
+  --gut: #17784a;
+  --warn: #a35c00;
+  --schlecht: #c02626;
+  --dunkel: #14161a;
+  --dunkel-flaeche: #1c1f25;
+
+  --schrift: "Archivo", ui-sans-serif, system-ui, "Segoe UI", Helvetica, Arial, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+
+  --spalte: 1180px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
+
+body {
+  margin: 0;
+  background: var(--papier);
+  color: var(--tinte);
+  font-family: var(--schrift);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  /* Millimeterpapier: das Raster ist Teil der Gestaltung, nicht Dekoration. */
+  background-image:
+    linear-gradient(var(--linie-fein) 1px, transparent 1px),
+    linear-gradient(90deg, var(--linie-fein) 1px, transparent 1px);
+  background-size: 100% 32px, 32px 100%;
+}
+
+a { color: inherit; }
+
+/* --- Statuszeile ------------------------------------------------------- */
+
+.statusbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--dunkel);
+  color: #f2f3f4;
+  border-bottom: 2px solid var(--signal);
+}
+.statusbar-inner {
+  max-width: var(--spalte);
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.sb-id b { font-weight: 700; }
+.sb-sep { color: var(--signal); margin: 0 8px; }
+.sb-nav { display: flex; gap: 20px; }
+.sb-nav a { text-decoration: none; opacity: 0.72; transition: opacity 0.15s; }
+.sb-nav a:hover, .sb-nav a.aktiv { opacity: 1; }
+.sb-nav a.aktiv { color: #fff; text-decoration: underline; text-underline-offset: 4px; }
+.sb-status { display: flex; align-items: center; gap: 7px; white-space: nowrap; }
+.dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--signal);
+  box-shadow: 0 0 0 0 rgba(228, 0, 43, 0.6);
+  animation: puls 2.4s ease-out infinite;
+}
+@keyframes puls {
+  0% { box-shadow: 0 0 0 0 rgba(228, 0, 43, 0.55); }
+  70%, 100% { box-shadow: 0 0 0 7px rgba(228, 0, 43, 0); }
+}
+
+/* --- Raster und Abschnitte --------------------------------------------- */
+
+.raster { max-width: var(--spalte); margin: 0 auto; padding: 0 24px; }
+
+.sektion { padding: 76px 0; border-bottom: 1px solid var(--linie); }
+.sektion-dunkel {
+  background: var(--dunkel);
+  color: #eceef1;
+  border-bottom: none;
+}
+
+.marke {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--signal);
+  padding-bottom: 10px;
+  margin-bottom: 34px;
+  border-bottom: 1px solid var(--linie);
+}
+.marke.hell { border-color: rgba(255, 255, 255, 0.16); }
+
+.sektion-titel {
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  margin: 0 0 14px;
+}
+.sektion-lead {
+  max-width: 62ch;
+  color: var(--tinte-weich);
+  margin: 0 0 40px;
+}
+.sektion-dunkel .sektion-lead { color: #a6adb8; }
+
+/* --- Kopfbereich -------------------------------------------------------- */
+
+.hero { padding-top: 62px; }
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.55fr 1fr;
+  gap: 52px;
+  align-items: start;
+}
+.hero h1 {
+  font-size: clamp(34px, 5.4vw, 61px);
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  font-weight: 700;
+  margin: 0 0 26px;
+}
+.lead { font-size: 18px; max-width: 46ch; margin: 0 0 14px; }
+.lead-sub { color: var(--tinte-weich); max-width: 48ch; margin: 0 0 30px; }
+
+.hero-aktionen { display: flex; gap: 12px; flex-wrap: wrap; }
+
+.knopf {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 13px 22px;
+  border: 1px solid var(--tinte);
+  background: transparent;
+  color: var(--tinte);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.knopf:hover { background: var(--tinte); color: var(--papier); }
+.knopf.primaer { background: var(--signal); border-color: var(--signal); color: #fff; }
+.knopf.primaer:hover { background: #b80023; border-color: #b80023; }
+.sektion-dunkel .knopf { border-color: #4a505b; color: #eceef1; }
+.sektion-dunkel .knopf:hover { background: #eceef1; color: var(--dunkel); }
+.sektion-dunkel .knopf.primaer { background: var(--signal); border-color: var(--signal); color: #fff; }
+
+/* --- Datenblatt --------------------------------------------------------- */
+
+.idkarte { border: 1px solid var(--tinte); background: var(--flaeche); }
+.idkarte-kopf {
+  display: flex; justify-content: space-between;
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 9px 12px;
+  background: var(--tinte); color: var(--papier);
+}
+.idkarte img { display: block; width: 100%; height: auto; filter: grayscale(1) contrast(1.05); }
+.idkarte-daten { margin: 0; padding: 4px 12px 12px; }
+.idkarte-daten > div {
+  display: flex; justify-content: space-between; gap: 12px;
+  padding: 9px 0; border-bottom: 1px solid var(--linie);
+  font-family: var(--mono); font-size: 11.5px;
+}
+.idkarte-daten > div:last-child { border-bottom: none; }
+.idkarte-daten dt { color: var(--tinte-weich); margin: 0; }
+.idkarte-daten dd { margin: 0; text-align: right; font-weight: 500; }
+
+/* --- Instrumente -------------------------------------------------------- */
+
+.instrumente {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  margin-top: 58px;
+  background: var(--linie);
+  border: 1px solid var(--linie);
+}
+.instrument {
+  background: var(--flaeche);
+  padding: 20px 18px;
+  display: flex; flex-direction: column; gap: 5px;
+}
+.instrument.breit { grid-column: 1 / -1; }
+.i-wert {
+  font-family: var(--mono);
+  font-size: 34px; font-weight: 700;
+  line-height: 1; letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+.i-wert.klein { font-size: 17px; font-weight: 500; letter-spacing: 0; }
+.i-label {
+  font-family: var(--mono); font-size: 10.5px;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--tinte-weich);
+}
+
+/* --- Module / Fallakten ------------------------------------------------- */
+
+.module { border-top: 1px solid var(--tinte); }
+
+.modul { border-bottom: 1px solid var(--tinte); background: var(--flaeche); }
+
+.modul-kopf {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 62px 1fr auto auto;
+  gap: 20px;
+  align-items: center;
+  padding: 22px 20px;
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.modul-kopf:hover { background: #fafbfb; }
+.modul-nr {
+  font-family: var(--mono); font-size: 12px; font-weight: 700;
+  color: var(--signal); letter-spacing: 0.08em;
+}
+.modul-titel { font-size: 20px; font-weight: 600; letter-spacing: -0.015em; }
+.modul-zeile { font-size: 14px; color: var(--tinte-weich); margin-top: 3px; }
+.modul-stack {
+  font-family: var(--mono); font-size: 10.5px;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--tinte-weich); white-space: nowrap;
+}
+.modul-schalter {
+  font-family: var(--mono); font-size: 11px;
+  border: 1px solid var(--linie); padding: 6px 11px;
+  white-space: nowrap; color: var(--tinte-weich);
+}
+.modul[open] .modul-schalter, .modul-kopf:hover .modul-schalter {
+  border-color: var(--tinte); color: var(--tinte);
+}
+
+.akte { display: none; padding: 0 20px 28px; }
+.modul.offen .akte { display: block; }
+
+.akte-raster {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--linie);
+  border: 1px solid var(--linie);
+  margin-bottom: 20px;
+}
+.akte-feld { background: var(--flaeche); padding: 17px 18px; }
+.akte-feld.voll { grid-column: 1 / -1; }
+.akte-label {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--signal); display: block; margin-bottom: 7px;
+}
+.akte-feld p { margin: 0; font-size: 14.5px; }
+.akte-feld p + p { margin-top: 10px; }
+
+.akte-messwerte {
+  display: flex; flex-wrap: wrap; gap: 26px;
+  font-family: var(--mono); font-size: 12px;
+  padding: 14px 18px; border: 1px solid var(--linie);
+  margin-bottom: 20px; background: #fbfbfc;
+}
+.akte-messwerte b { font-weight: 700; }
+.akte-links { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.akte-bild {
+  width: 100%; height: auto; display: block;
+  border: 1px solid var(--linie); margin-bottom: 20px;
+}
+
+/* Spielmodul */
+.spiel-flaeche { border: 1px solid var(--tinte); background: var(--dunkel); margin-bottom: 20px; }
+.spiel-start {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 14px; padding: 62px 20px; text-align: center; color: #d8dce2;
+}
+.spiel-start p { margin: 0; font-size: 14px; max-width: 48ch; color: #a6adb8; }
+.spiel-flaeche iframe { display: block; width: 100%; height: 620px; border: none; }
+
+/* --- Abgleich ----------------------------------------------------------- */
+
+.abgleich-flaeche {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 26px;
+  align-items: start;
+}
+.abgleich-eingabe label {
+  font-family: var(--mono); font-size: 10.5px;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: #a6adb8; display: block; margin-bottom: 8px;
+}
+#anzeige {
+  width: 100%;
+  background: var(--dunkel-flaeche);
+  border: 1px solid #383e48;
+  color: #eceef1;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  line-height: 1.6;
+  padding: 14px;
+  resize: vertical;
+}
+#anzeige:focus { outline: 2px solid var(--signal); outline-offset: -1px; }
+.abgleich-knoepfe { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+
+.abgleich-ergebnis {
+  border: 1px solid #383e48;
+  background: var(--dunkel-flaeche);
+  min-height: 260px;
+  padding: 20px;
+}
+.platzhalter { color: #767e8b; font-family: var(--mono); font-size: 12px; margin: 0; }
+
+.score-zeile { display: flex; align-items: baseline; gap: 14px; margin-bottom: 4px; }
+.score-wert {
+  font-family: var(--mono); font-size: 46px; font-weight: 700;
+  line-height: 1; letter-spacing: -0.04em; font-variant-numeric: tabular-nums;
+}
+.score-text { font-size: 14px; color: #a6adb8; }
+.score-balken { height: 6px; background: #2a2f38; margin: 14px 0 22px; }
+.score-balken i { display: block; height: 100%; background: var(--signal); transition: width 0.6s cubic-bezier(0.2, 0.7, 0.3, 1); }
+
+.trefferliste + .trefferliste { margin-top: 20px; }
+.tl-titel {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: #a6adb8; margin-bottom: 9px;
+}
+.marker { display: flex; flex-wrap: wrap; gap: 6px; }
+.marke-chip {
+  font-family: var(--mono); font-size: 11.5px;
+  padding: 4px 9px; border: 1px solid;
+}
+.marke-chip.ja { border-color: #2f6b4f; background: rgba(47, 107, 79, 0.18); color: #7fd6a6; }
+.marke-chip.nein { border-color: #7a3030; background: rgba(122, 48, 48, 0.18); color: #f0958f; }
+
+/* --- Werdegang als Skala ------------------------------------------------ */
+
+.skala { border: 1px solid var(--tinte); background: var(--flaeche); padding: 30px 22px 22px; }
+.skala-achse { position: relative; height: 3px; background: var(--tinte); margin: 42px 0 0; }
+.skala-punkt { position: absolute; top: 50%; transform: translate(-50%, -50%); }
+.skala-punkt i {
+  display: block; width: 11px; height: 11px; background: var(--flaeche);
+  border: 3px solid var(--tinte); border-radius: 50%;
+}
+.skala-punkt.jetzt i { background: var(--signal); border-color: var(--signal); }
+.skala-punkt span {
+  position: absolute; left: 50%; transform: translateX(-50%);
+  font-family: var(--mono); font-size: 10.5px; white-space: nowrap;
+  top: 18px; color: var(--tinte-weich);
+}
+.skala-eintraege {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 1px; background: var(--linie); border: 1px solid var(--linie);
+  margin-top: 62px;
+}
+.skala-eintrag { background: var(--flaeche); padding: 16px 15px; }
+.se-jahr {
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em;
+  color: var(--signal); display: block; margin-bottom: 5px;
+}
+.se-titel { font-weight: 600; font-size: 15px; }
+.se-ort { font-size: 13px; color: var(--tinte-weich); }
+
+/* --- Kontakt ------------------------------------------------------------ */
+
+.kontakt-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 1px; background: var(--linie); border: 1px solid var(--linie);
+}
+.kontakt-feld {
+  background: var(--flaeche); padding: 22px 20px;
+  text-decoration: none; display: flex; flex-direction: column; gap: 5px;
+  transition: background 0.15s;
+}
+.kontakt-feld:hover { background: var(--tinte); color: var(--papier); }
+.kontakt-feld:hover .kf-label { color: var(--papier); }
+.kf-label {
+  font-family: var(--mono); font-size: 10px;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--signal);
+}
+.kf-wert { font-size: 17px; font-weight: 500; }
+
+/* --- Fusszeile ---------------------------------------------------------- */
+
+.fusszeile { background: var(--dunkel); color: #8a919c; padding: 24px 0; }
+.fz-inner {
+  display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.05em;
+}
+.fusszeile a { color: #d8dce2; }
+
+/* --- Schmale Bildschirme ------------------------------------------------ */
+
+@media (max-width: 900px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 34px; }
+  .idkarte { max-width: 320px; }
+  .instrumente { grid-template-columns: repeat(2, 1fr); }
+  .abgleich-flaeche { grid-template-columns: 1fr; }
+  .skala-eintraege { grid-template-columns: repeat(2, 1fr); }
+  .sb-nav { display: none; }
+}
+
+@media (max-width: 620px) {
+  .sektion { padding: 52px 0; }
+  .raster { padding: 0 16px; }
+  .statusbar-inner { padding: 0 16px; font-size: 10px; }
+  /* Auf schmalen Geräten bricht die volle Berufsbezeichnung um und macht die
+     Statuszeile zweizeilig – dort genügt der Name. */
+  .sb-id .sb-sep, .sb-id .sb-rolle { display: none; }
+  .modul-kopf { grid-template-columns: 34px 1fr; gap: 12px; padding: 18px 15px; }
+  .modul-stack, .modul-schalter { display: none; }
+  .akte { padding: 0 15px 22px; }
+  .akte-raster { grid-template-columns: 1fr; }
+  .kontakt-grid { grid-template-columns: 1fr; }
+  .instrumente { grid-template-columns: 1fr; }
+  .skala-eintraege { grid-template-columns: 1fr; }
+  .spiel-flaeche iframe { height: 460px; }
+}
